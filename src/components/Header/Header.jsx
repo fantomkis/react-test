@@ -1,18 +1,19 @@
-import React from "react";
-import s from "./MainPage.module.css";
-import sprite from "../assats/sprite.svg";
+import s from './Header.module.css';
+import sprite from '../../assets/sprite.svg';
 
-function Header({ title, icon }) {
+const Header = ({ title, icon, cbOnClick }) => {
   return (
     <header className={s.header}>
-      <button type={s.button}>
-        <svg width="15" height="15">
-          <use href={sprite + icon}></use>
-        </svg>
-      </button>
+      {icon && (
+        <button onClick={cbOnClick} type="button" className={s.btn}>
+          <svg width="15" height="15">
+            <use href={sprite + icon} />
+          </svg>
+        </button>
+      )}
       <h1 className={s.title}>{title}</h1>
     </header>
   );
-}
+};
 
 export default Header;
