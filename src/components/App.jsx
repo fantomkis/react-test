@@ -1,41 +1,54 @@
-import { Component } from 'react';
-import MainPage from './MainPage/MainPage';
-import TransactionHistoryPage from './TransactionHistoryPage/TransactionHistoryPage';
+import { Component } from "react";
+import MainPage from "./MainPage/MainPage";
+import TransactionHistoryPage from "./TransactionHistoryPage/TransactionHistoryPage";
 
 export class App extends Component {
   state = {
-    activePage: 'main',
+    activePage: "main",
+    categories: [
+      { title: "Їжа", id: "1" },
+      { title: "Різне", id: "2" },
+      { title: "Кавун", id: "3" },
+    ],
+  };
+
+  addCategory = (newCategory) => {
+    this.setState((prevState) => ({
+      categories: [...prevState.categories, newCategory],
+    }));
   };
 
   onIncomesBtnClick = () => {
-    this.setState({ activePage: 'incomes' });
+    this.setState({ activePage: "incomes" });
   };
 
   onCostsBtnClick = () => {
-    this.setState({ activePage: 'costs' });
+    this.setState({ activePage: "costs" });
   };
   onReturnBtnClick = () => {
-    this.setState({ activePage: 'main' });
+    this.setState({ activePage: "main" });
   };
 
   render() {
-    const { activePage } = this.state;
+    const { activePage, categories } = this.state;
     switch (activePage) {
-      case 'main':
+      case "main":
         return (
           <MainPage
+            addCategory={this.addCategory}
             onIncomesBtnClick={this.onIncomesBtnClick}
             onCostsBtnClick={this.onCostsBtnClick}
+            categories={categories}
           />
         );
-      case 'costs':
+      case "costs":
         return (
           <TransactionHistoryPage
             transType={activePage}
             onReturnBtnClick={this.onReturnBtnClick}
           />
         );
-      case 'incomes':
+      case "incomes":
         return (
           <TransactionHistoryPage
             transType={activePage}

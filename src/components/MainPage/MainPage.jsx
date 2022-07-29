@@ -7,6 +7,21 @@ import { Component } from "react";
 class MainPage extends Component {
   state = {
     isCategoriesList: false,
+    date: "2022-07-28",
+    time: "14:14",
+    category: "продукти",
+    summ: "",
+    currency: "UAH",
+    comment: "",
+  };
+
+  handleChange = (e) => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  };
+
+  setCategories = (category) => {
+    this.setState({ category });
   };
 
   handleOpenCategoriesList = () => {
@@ -17,8 +32,9 @@ class MainPage extends Component {
   };
 
   render() {
-    const { onIncomesBtnClick, onCostsBtnClick } = this.props;
-    const { isCategoriesList } = this.state;
+    const { onIncomesBtnClick, onCostsBtnClick, addCategory, categories } =
+      this.props;
+    const { isCategoriesList, ...form } = this.state;
     return (
       <div className="container">
         <Header
@@ -28,10 +44,16 @@ class MainPage extends Component {
         />
         <main className={s.main}>
           {isCategoriesList ? (
-            <CategoriesList />
+            <CategoriesList
+              categories={categories}
+              addCategory={addCategory}
+              setCategories={this.setCategories}
+            />
           ) : (
             <>
               <TransactionForm
+                handleChange={this.handleChange}
+                form={form}
                 handleOpenCategoriesList={this.handleOpenCategoriesList}
               />
               <div className={s.blockBtn}>
